@@ -67,8 +67,11 @@ class User extends Authenticatable
         $new_user->phone = $request->phone;
         $new_user->email = $request->email;
         $new_user->password = Hash::make($request->password);
-        if($new_user->save())
-            return json_encode($new_user->id);
+        if($new_user->save()){
+            $array = [];
+            $array['id'] = $new_user->id;
+            return json_encode($array);
+        }
         return json_encode(false);
     }
 
@@ -93,8 +96,11 @@ class User extends Authenticatable
             return json_encode($validator->errors());
         }
 
-        if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1)
-            return json_encode(User::where('email', '=', $request->email)->where('password', '=', $request->password)->first()->id);
+        if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1){
+            $array = [];
+            $array['id'] = User::where('email', '=', $request->email)->where('password', '=', $request->password)->first()->id;
+            return json_encode($array);
+        }
         return json_encode(false);
     }
 }
