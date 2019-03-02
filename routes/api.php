@@ -27,4 +27,5 @@ Route::post('addNewUser', function(Request $request){
 Route::post('checkUser', function(Request $request){
 	return User::checkUser($request);
 });
-// Route::post('getParkingSpots', 'LocationController@getParkingSpots');
+
+Route::get('getParkingSpots', 'LocationController@getParkingSpots');

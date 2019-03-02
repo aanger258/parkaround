@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Geocoder\Laravel\ProviderAndDumperAggregator as Geocoder;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-   /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -36,14 +27,13 @@ class LocationController extends Controller
 
     public static function getParkingSpots(Request $request)
     {
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyB6SQwqGyvpF4j0GTHTgcmMkLBvQCE_6pE';
+    	$url = 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyB6SQwqGyvpF4j0GTHTgcmMkLBvQCE_6pE';
 
         $json = file_get_contents($url);
 
         $data = json_decode($json, TRUE);
-
         if($data['status']=="OK"){
-            return $data['results'];
+            dd($data['results']);
         }
     }
 }
