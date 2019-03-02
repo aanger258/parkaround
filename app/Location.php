@@ -19,10 +19,16 @@ class Location extends Model
         $new_parking_spot->latitude = $request->latitude;
         $new_parking_spot->start_time = $request->start_time;
         $new_parking_spot->end_time = $request->end_time;
-        $new_parking_spot->status = $request->status;
-        $new_parking_spot->type = $request->type;
+        if(!isset($request->status)){
+	        $new_parking_spot->status = $request->status;
+	    }
+	    if(!isset($request->type)){
+	        $new_parking_spot->type = $request->type;
+	    }
         $new_parking_spot->details = $request->details;
-        $new_parking_spot->price = 0;
+        if(!isset($request->price)){
+	        $new_parking_spot->price = $request->price;
+	    }
         if($new_parking_spot->save())
             return $new_parking_spot->id;
         return "false";
@@ -42,7 +48,13 @@ class Location extends Model
 	        // foreach ($data['results'] as $key => $data) {
 	        // 	echo $key;
 	        // }
-	        dd($data['results'][0]['geometry']);
+	        $lat1 = $data['results'][0]['geometry']['viewport']['northeast']['lat'];
+	        $lat2 = $data['results'][0]['geometry']['viewport']['southwest']['lat'];
+	        $lng1 = $data['results'][0]['geometry']['viewport']['northeast']['lng'];
+	        $lng2 = $data['results'][0]['geometry']['viewport']['southwest']['lng'];
+	        $lat = ($lat1+$lat2)/2;
+	        $lng = ($lng1+$lng2)/2;
+
 	    }
     }
 }
