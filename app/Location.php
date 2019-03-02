@@ -59,7 +59,7 @@ class Location extends Model
 	        		'price' => $parkingSpot->price,
 	        	];
 	        }
-	        dd(json_encode($parkings_array));
+	        return json_encode($parkings_array);
 	    }
     }
 }
