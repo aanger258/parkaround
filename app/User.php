@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'phone', 'password',
+        'name', 'email', 'phone', 'password',
     ];
 
     /**
@@ -43,7 +43,6 @@ class User extends Authenticatable
     public static function addNewUser(Request $request){
          $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'surname' => 'required',
             'phone' => 'required',
             'email' => 'required',
             'password' => 'required',
@@ -63,7 +62,6 @@ class User extends Authenticatable
         }
         $new_user = new User;
         $new_user->name = $request->name;
-        $new_user->surname = $request->surname;
         $new_user->phone = $request->phone;
         $new_user->email = $request->email;
         $new_user->password = Hash::make($request->password);
