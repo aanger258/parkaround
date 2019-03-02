@@ -23,5 +23,6 @@ Route::get('ceva',function(){
 });
 Route::post('addNewUser',function(Request $request){
 	User::addNewUser($request);
+	return 'ceva';
 });
 
