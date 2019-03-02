@@ -31,3 +31,5 @@ Route::post('checkUser', function(Request $request){
 Route::post('addParkingSpotByDirectLocation', 'LocationController@addParkingSpotByDirectLocation');
 
 Route::post('getParkingSpacesByAddress', 'LocationController@getParkingSpacesByAddress');
+
+Route::post('getParkingSpacesByDirectLocation', 'LocationController@getParkingSpacesByDirectLocation');
