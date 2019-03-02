@@ -42,7 +42,7 @@ class Location extends Model
 	        // foreach ($data['results'] as $key => $data) {
 	        // 	echo $key;
 	        // }
-	        dd($data['results']['address_components']);
+	        dd($data);
 	    }
     }
 }
