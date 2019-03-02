@@ -16,11 +16,14 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->string('name');
+            $table->string('address');
             $table->string('longitude');
             $table->string('latitude');
-            $table->boolean('status');
-            $table->integer('type');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
+            $table->boolean('status')->default(0);
+            $table->integer('type')->default(0); //0->persoana fizica;1->companie;2->parcare normala
+            $table->string('details')->nullable();
             $table->integer('price');
             $table->rememberToken();
             $table->timestamps();

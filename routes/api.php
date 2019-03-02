@@ -28,4 +28,4 @@ Route::post('checkUser', function(Request $request){
 	return User::checkUser($request);
 });
 
-Route::get('getParkingSpots', 'LocationController@getParkingSpots');
+Route::get('addParkingSpotByAddress', 'LocationController@addParkingSpotByAddress');
