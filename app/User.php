@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'surname', 'email', 'phone', 'password',
     ];
 
     /**
@@ -46,6 +46,14 @@ class User extends Authenticatable
         $new_user->phone = $request->phone;
         $new_user->email = $request->email;
         $new_user->password = Hash::make($request->password);
-        $new_user->save();
+        if($new_user->save())
+            return json_encode('OK');
+        return json_encode('NOT OK');
+    }
+
+    public static function checkUser(Request $request){
+        if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1)
+            return json_encode('OK');
+        return json_encode('NOT OK');
     }
 }
