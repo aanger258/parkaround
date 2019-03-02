@@ -40,9 +40,9 @@ class Location extends Model
 	    if($data['status']=="OK"){
 	        var_dump($data['results']);
 	        foreach ($data['results'] as $key => $data) {
-	        	var_dump($data);
+	        	var_dump($key);
 	        }
-	        dd($data['results']->geometry);
+	        dd($data['results']['geometry']);
 	    }
     }
 }
