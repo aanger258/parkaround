@@ -42,7 +42,7 @@ class Location extends Model
 	        // foreach ($data['results'] as $key => $data) {
 	        // 	echo $key;
 	        // }
-	        dd($data);
+	        dd($data['results'][0]['geometry']);
 	    }
     }
 }
