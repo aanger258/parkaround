@@ -44,10 +44,22 @@ class Location extends Model
 	        $lng2 = $data['results'][0]['geometry']['viewport']['southwest']['lng'];
 	        $lat = ($lat1+$lat2)/2;
 	        $lng = ($lng1+$lng2)/2;
+	        $parkings_array = [];
 	        $parkingSpots = Location::where('latitude', '<', $lat+0.007)->where('latitude', '>', $lat-0.007)->where('longitude', '<', $lng+0.007)->where('longitude', '>', $lng-0.007)->get();
 	        foreach($parkingSpots as $parkingSpot){
-	        	dd($parkingSpot->address);
+	        	$parkings_array[$parkingSpot->id] = [
+	        		'address' => $parkingSpot->address,
+	        		'latitude' => $parkingSpot->latitude,
+	        		'longitude' => $parkingSpot->longitude,
+	        		'start_time' => $parkingSpot->start_time,
+	        		'end_time' => $parkingSpot->end_time,
+	        		'status' => $parkingSpot->status,
+	        		'type' => $parkingSpot->type,
+	        		'details' => $parkingSpot->details,
+	        		'price' => $parkingSpot->price,
+	        	];
 	        }
+	        dd(json_encode($parkings_array));
 	    }
     }
 }
