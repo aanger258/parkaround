@@ -14,21 +14,15 @@ class Location extends Model
     public static function addNewParkingSpotByDirectLocation(Request $request){
         $new_parking_spot = new Location;
         $new_parking_spot->user_id = $request->id;
-        $new_parking_spot->address = '';
+        $new_parking_spot->address = isset($request->address) ? $request->address : " ";
         $new_parking_spot->longitude = $request->longitude;
         $new_parking_spot->latitude = $request->latitude;
         $new_parking_spot->start_time = $request->start_time;
         $new_parking_spot->end_time = $request->end_time;
-        if(!isset($request->status)){
-	        $new_parking_spot->status = $request->status;
-	    }
-	    if(!isset($request->type)){
-	        $new_parking_spot->type = $request->type;
-	    }
+	    $new_parking_spot->status = isset($request->status) ? $request->status : 0;
+	    $new_parking_spot->type = isset($request->type) ? $request->type : 0;
         $new_parking_spot->details = $request->details;
-        if(!isset($request->price)){
-	        $new_parking_spot->price = $request->price;
-	    }
+        $new_parking_spot->price = isset($request->price) ? $request->price : 0;
         if($new_parking_spot->save())
             return $new_parking_spot->id;
         return "false";
