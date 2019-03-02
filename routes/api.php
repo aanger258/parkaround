@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('ceva',function(){
+	return 'ceva';
+});
+Route::get('post',function(Request $request){
+	$new_user = new User;
+	$new_user->name = $request->name;
+	$new_user->email = $request->email;
+	$new_user->password = Hash::make($request->password);
+	$new_user->save();
+});
+
