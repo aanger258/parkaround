@@ -38,9 +38,9 @@ class Location extends Model
 	    $data = json_decode($json, TRUE);
 
 	    if($data['status']=="OK"){
-	        var_dump($data['results']);
+	        //var_dump($data['results']);
 	        foreach ($data['results'] as $key => $data) {
-	        	var_dump($key);
+	        	echo $key;
 	        }
 	        dd($data['results']['geometry']);
 	    }
