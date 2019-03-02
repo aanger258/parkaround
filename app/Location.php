@@ -46,8 +46,9 @@ class Location extends Model
 
     public static function verifyAddress($data){
     	if(isset($data['address'])){
-	    	$url = 'https://maps.googleapis.com/maps/api/geocode/json?address=Strada+Preciziei&key=AIzaSyB6SQwqGyvpF4j0GTHTgcmMkLBvQCE_6pE';
-	    	//dd($url);
+    		$address = str_replace(" ","+",$data['address']);
+    		
+	    	$url = 'https://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&key=AIzaSyB6SQwqGyvpF4j0GTHTgcmMkLBvQCE_6pE';
 
 	        $json = file_get_contents($url);
 
