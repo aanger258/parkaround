@@ -49,20 +49,14 @@ class LocationController extends Controller
         return Location::addNewParkingSpotByDirectLocation($request);
     }
 
-    public static function addParkingSpotByAddress(Request $request)
+    public static function getParkingSpacesByAddress(Request $request)
     {
     	$validator = Validator::make($request->all(), [
-            'id' => 'required',
             'address' => 'required',
         ]);
-        $validator->after(function ($validator) {
-            if (Location::verifyAddress($validator->attributes())) {
-                $validator->errors()->add('address', 'Address already in use!!');
-            }
-        });
         if($validator->fails()) {
             return json_encode($validator->errors());
         }
-        return Location::addParkingSpotByAddress($request);
+        return Location::getParkingSpacesByAddress($request);
     }
 }

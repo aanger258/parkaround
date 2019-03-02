@@ -94,7 +94,7 @@ class User extends Authenticatable
         }
 
         if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1)
-            return User::where('email', '=', $request->email)->where('password', '=', $request->password)->first()->id;
+            return User::where('email', '=', $request->email)->where('password', '=', $request->password)->first()->id);
         return "false";
     }
 }
