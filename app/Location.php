@@ -38,17 +38,14 @@ class Location extends Model
 	    $data = json_decode($json, TRUE);
 
 	    if($data['status']=="OK"){
-	        //var_dump($data['results']);
-	        // foreach ($data['results'] as $key => $data) {
-	        // 	echo $key;
-	        // }
 	        $lat1 = $data['results'][0]['geometry']['viewport']['northeast']['lat'];
 	        $lat2 = $data['results'][0]['geometry']['viewport']['southwest']['lat'];
 	        $lng1 = $data['results'][0]['geometry']['viewport']['northeast']['lng'];
 	        $lng2 = $data['results'][0]['geometry']['viewport']['southwest']['lng'];
 	        $lat = ($lat1+$lat2)/2;
 	        $lng = ($lng1+$lng2)/2;
-
+	        $parkingSpots = Location::where('latitude', '<', $lat+0.007)->where('latitude', '>', $lat-0.007)->where('longitute', '<', $lng+0.007)->where('longitute', '>', $lng-0.007)->get();
+	        dd($parkingSpots);
 	    }
     }
 }
