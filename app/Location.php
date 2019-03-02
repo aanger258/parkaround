@@ -61,5 +61,6 @@ class Location extends Model
 	        }
 	        return json_encode($parkings_array);
 	    }
+	    return "false";
     }
 }
