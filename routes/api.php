@@ -21,11 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('ceva',function(){
 	return 'ceva';
 });
-Route::get('post',function(Request $request){
-	$new_user = new User;
-	$new_user->name = $request->name;
-	$new_user->email = $request->email;
-	$new_user->password = Hash::make($request->password);
-	$new_user->save();
+Route::post('addNewUser',function(Request $request){
+	User::addNewUser($request);
 });
 

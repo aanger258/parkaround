@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function addNewUser(Request $request){
+        $new_user = new User;
+        $new_user->name = $request->name;
+        $new_user->surname = $request->surname;
+        $new_user->phone = $request->phone;
+        $new_user->email = $request->email;
+        $new_user->password = Hash::make($request->password);
+        $new_user->save();
+    }
 }
