@@ -46,7 +46,7 @@ class Location extends Model
 	        $lng = ($lng1+$lng2)/2;
 	        $parkingSpots = Location::where('latitude', '<', $lat+0.007)->where('latitude', '>', $lat-0.007)->where('longitude', '<', $lng+0.007)->where('longitude', '>', $lng-0.007)->get();
 	        foreach($parkingSpots as $parkingSpot){
-	        	dd($parkingSpot);
+	        	dd($parkingSpot->address);
 	        }
 	    }
     }
