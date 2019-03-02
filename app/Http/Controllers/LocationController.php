@@ -59,4 +59,16 @@ class LocationController extends Controller
         }
         return Location::getParkingSpacesByAddress($request);
     }
+
+    public static function getParkingSpacesByDirectLocation(Request $request)
+    {
+    	$validator = Validator::make($request->all(), [
+            'longitude' => 'required',
+            'latitude' => 'required',
+        ]);
+        if($validator->fails()) {
+            return json_encode($validator->errors());
+        }
+        return Location::getParkingSpacesByDirectLocation($request);
+    }
 }

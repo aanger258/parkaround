@@ -59,8 +59,31 @@ class Location extends Model
 	        		'price' => $parkingSpot->price,
 	        	];
 	        }
-	        return json_encode($parkings_array);
+	        if(count($parkings_array) > 0)
+        		return json_encode($parkings_array);
+        	return json_encode(false);
 	    }
-	    return "false";
+	    return json_encode(false);
+    }
+
+	public static function getParkingSpacesByDirectLocation($data){
+        $parkings_array = [];
+        $parkingSpots = Location::where('latitude', '<', $data['latitude']+0.007)->where('latitude', '>', $data['latitude']-0.007)->where('longitude', '<', $data['longitude']+0.007)->where('longitude', '>', $data['longitude']-0.007)->get();
+        foreach($parkingSpots as $parkingSpot){
+        	$parkings_array[$parkingSpot->id] = [
+        		'address' => $parkingSpot->address,
+        		'latitude' => $parkingSpot->latitude,
+        		'longitude' => $parkingSpot->longitude,
+        		'start_time' => $parkingSpot->start_time,
+        		'end_time' => $parkingSpot->end_time,
+        		'status' => $parkingSpot->status,
+        		'type' => $parkingSpot->type,
+        		'details' => $parkingSpot->details,
+        		'price' => $parkingSpot->price,
+        	];
+        }
+        if(count($parkings_array) > 0)
+        	return json_encode($parkings_array);
+	    return json_encode(false);
     }
 }
