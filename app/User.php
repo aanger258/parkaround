@@ -37,7 +37,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function addNewUser(Request $request){
+    public static function addNewUser(Request $request){
         $new_user = new User;
         $new_user->name = $request->name;
         $new_user->surname = $request->surname;
