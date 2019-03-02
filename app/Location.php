@@ -39,10 +39,10 @@ class Location extends Model
 
 	    if($data['status']=="OK"){
 	        //var_dump($data['results']);
-	        foreach ($data['results'] as $key => $data) {
-	        	echo $key;
-	        }
-	        dd($data['results']['geometry']);
+	        // foreach ($data['results'] as $key => $data) {
+	        // 	echo $key;
+	        // }
+	        dd($data['results']['address_components']);
 	    }
     }
 }
