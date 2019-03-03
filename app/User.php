@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'phone', 'password',
+        'name', 'email', 'phone', 'password',
     ];
 
     /**
@@ -40,20 +41,64 @@ class User extends Authenticatable
     ];
 
     public static function addNewUser(Request $request){
+         $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $validator->after(function ($validator) {
+            if (User::verifyEmail($validator->attributes())) {
+                $validator->errors()->add('email', 'Email already in use!');
+            }
+            if (User::verifyPhone($validator->attributes())) {
+                $validator->errors()->add('phone', 'Phone already in use!');
+            }
+        });
+
+        if($validator->fails()) {
+            return json_encode($validator->errors());
+        }
         $new_user = new User;
         $new_user->name = $request->name;
-        $new_user->surname = $request->surname;
         $new_user->phone = $request->phone;
         $new_user->email = $request->email;
         $new_user->password = Hash::make($request->password);
-        if($new_user->save())
-            return json_encode('OK');
-        return json_encode('NOT OK');
+        if($new_user->save()){
+            $array = [];
+            $array['id'] = $new_user->id;
+            return json_encode($array);
+        }
+        return json_encode(false);
+    }
+
+    public static function verifyEmail($data){
+        if(isset($data['email']) && User::where('email', '=', $data['email'])->count() != 0)
+            return true;
+        return false;
+    }
+        public static function verifyPhone($data){
+        if(isset($data['phone']) && User::where('phone', '=', $data['phone'])->count() != 0)
+            return true;
+        return false;
     }
 
     public static function checkUser(Request $request){
-        if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1)
-            return json_encode('OK');
-        return json_encode('NOT OK');
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return json_encode($validator->errors());
+        }
+
+        if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1){
+            $array = [];
+            $array['id'] = User::where('email', '=', $request->email)->where('password', '=', $request->password)->first()->id;
+            return json_encode($array);
+        }
+        return json_encode(false);
     }
 }
