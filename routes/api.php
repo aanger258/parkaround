@@ -18,14 +18,15 @@ use Illuminate\Support\Facades\DB;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('ceva',function(){
-	return 'ceva';
+Route::post('addNewUser', function(Request $request){
+	return User::addNewUser($request);
 });
-Route::get('post',function(Request $request){
-	$new_user = new User;
-	$new_user->name = $request->name;
-	$new_user->email = $request->email;
-	$new_user->password = Hash::make($request->password);
-	$new_user->save();
+Route::post('checkUser', function(Request $request){
+	return User::checkUser($request);
 });
 
+Route::post('addParkingSpotByDirectLocation', 'LocationController@addParkingSpotByDirectLocation');
+
+Route::post('getParkingSpacesByAddress', 'LocationController@getParkingSpacesByAddress');
+
+Route::post('getParkingSpacesByDirectLocation', 'LocationController@getParkingSpacesByDirectLocation');
