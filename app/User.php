@@ -68,6 +68,7 @@ class User extends Authenticatable
         if($new_user->save()){
             $array = [];
             $array['id'] = $new_user->id;
+            $array['name'] = $new_user->name;
             return json_encode($array);
         }
         return json_encode(false);
@@ -97,6 +98,7 @@ class User extends Authenticatable
         if(User::where('email', '=', $request->email)->count() == 1 && Hash::check($request->password, $user->password)){
             $array = [];
             $array['id'] = $user->id;
+            $array['name'] = $user->name;
             return json_encode($array);
         }
         return json_encode(false);
