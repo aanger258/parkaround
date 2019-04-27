@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\DB;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('ceva',function(){
-	return 'ceva';
-});
 Route::post('addNewUser', function(Request $request){
 	return User::addNewUser($request);
 });

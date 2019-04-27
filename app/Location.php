@@ -23,9 +23,14 @@ class Location extends Model
 	    $new_parking_spot->type = isset($request->type) ? $request->type : 0;
         $new_parking_spot->details = $request->details;
         $new_parking_spot->price = isset($request->price) ? $request->price : 0;
-        if($new_parking_spot->save())
-            return $new_parking_spot->id;
-        return "false";
+        $array = [];
+        if($new_parking_spot->save()){
+        	$array = [];
+            $array['key'] = $new_parking_spot->id;
+            return json_encode($array);
+        }
+        $array['key'] = false;
+        return json_encode($false);
     }
 
 	public static function getParkingSpacesByAddress($data){
