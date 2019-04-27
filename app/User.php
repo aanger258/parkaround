@@ -94,9 +94,9 @@ class User extends Authenticatable
             return json_encode($validator->errors());
         }
 
-        if(User::where('email', '=', $request->email)->where('password', '=', $request->password)->count() == 1){
+        if(User::where('email', '=', $request->email)->where('password', '=', Hash::make($request->password))->count() == 1){
             $array = [];
-            $array['id'] = User::where('email', '=', $request->email)->where('password', '=', $request->password)->first()->id;
+            $array['id'] = User::where('email', '=', $request->email)->where('password', '=', Hash::make($request->password))->first()->id;
             return json_encode($array);
         }
         return json_encode(false);
