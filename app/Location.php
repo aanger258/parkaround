@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,8 +56,14 @@ class Location extends Model
 	    $json = file_get_contents($url);
 
 	    $data = json_decode($json, TRUE);
-
 	    if($data['status']=="OK"){
+
+            //analytics
+            $sectors_array = array("Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6");
+            if(in_array($data['results'][0]['address_components'][1]['long_name'], $sectors_array)){
+                DB::table('sectors')->where('sector', $data['results'][0]['address_components'][1]['long_name'])->increment('search_count');
+            }
+            
 	        $lat1 = $data['results'][0]['geometry']['viewport']['northeast']['lat'];
 	        $lat2 = $data['results'][0]['geometry']['viewport']['southwest']['lat'];
 	        $lng1 = $data['results'][0]['geometry']['viewport']['northeast']['lng'];
