@@ -63,7 +63,10 @@ class Location extends Model
             if(in_array($data['results'][0]['address_components'][1]['long_name'], $sectors_array)){
                 DB::table('sectors')->where('sector', $data['results'][0]['address_components'][1]['long_name'])->increment('search_count');
             }
-            
+            if(in_array($data['results'][0]['address_components'][2]['long_name'], $sectors_array)){
+                DB::table('sectors')->where('sector', $data['results'][0]['address_components'][2]['long_name'])->increment('search_count');
+            }
+
 	        $lat1 = $data['results'][0]['geometry']['viewport']['northeast']['lat'];
 	        $lat2 = $data['results'][0]['geometry']['viewport']['southwest']['lat'];
 	        $lng1 = $data['results'][0]['geometry']['viewport']['northeast']['lng'];
