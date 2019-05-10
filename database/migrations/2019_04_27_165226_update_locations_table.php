@@ -39,6 +39,6 @@ class UpdateLocationsTable extends Migration
             $table->dropColumn('thursday');
             $table->dropColumn('friday');
             $table->dropColumn('saturday');
-        }
+        });
     }
 }
