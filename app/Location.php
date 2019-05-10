@@ -19,6 +19,20 @@ class Location extends Model
         $new_parking_spot->latitude = $request->latitude;
         $new_parking_spot->start_time = $request->start_time;
         $new_parking_spot->end_time = $request->end_time;
+        if(strpos($request->daysSelected, "SUNDAY"))
+            $new_parking_spot->sunday = 1;
+        if(strpos($request->daysSelected, "MONDAY"))
+            $new_parking_spot->monday = 1;
+        if(strpos($request->daysSelected, "TUESDAY"))
+            $new_parking_spot->tuesday = 1;
+        if(strpos($request->daysSelected, "WEDNESDAY"))
+            $new_parking_spot->wednesday = 1;
+        if(strpos($request->daysSelected, "THURSDAY"))
+            $new_parking_spot->thursday = 1;
+        if(strpos($request->daysSelected, "FRIDAY"))
+            $new_parking_spot->friday = 1;
+        if(strpos($request->daysSelected, "SATURDAY"))
+            $new_parking_spot->saturday = 1;
 	    $new_parking_spot->status = isset($request->status) ? $request->status : 0;
 	    $new_parking_spot->type = isset($request->type) ? $request->type : 0;
         $new_parking_spot->details = $request->details;
@@ -58,6 +72,13 @@ class Location extends Model
 	        		'longitude' => $parkingSpot->longitude,
 	        		'start_time' => $parkingSpot->start_time,
 	        		'end_time' => $parkingSpot->end_time,
+                    'sunday' => $parkingSpot->sunday,
+                    'monday' => $parkingSpot->monday,
+                    'tuesday' => $parkingSpot->tuesday,
+                    'wednesday' => $parkingSpot->wednesday,
+                    'thursday' => $parkingSpot->thursday,
+                    'friday' => $parkingSpot->friday,
+                    'saturday' => $parkingSpot->saturday,
 	        		'status' => $parkingSpot->status,
 	        		'type' => $parkingSpot->type,
 	        		'details' => $parkingSpot->details,
@@ -66,9 +87,11 @@ class Location extends Model
 	        }
 	        if(count($parkings_array) > 0)
         		return json_encode($parkings_array);
-        	return json_encode(false);
+            $array['search_error'] = true;
+        	return json_encode($array);
 	    }
-	    return json_encode(false);
+	    $array['google_api_error'] = true;
+        return json_encode($array);
     }
 
 	public static function getParkingSpacesByDirectLocation($data){
@@ -77,18 +100,26 @@ class Location extends Model
         foreach($parkingSpots as $parkingSpot){
         	$parkings_array[$parkingSpot->id] = [
         		'address' => $parkingSpot->address,
-        		'latitude' => $parkingSpot->latitude,
-        		'longitude' => $parkingSpot->longitude,
-        		'start_time' => $parkingSpot->start_time,
-        		'end_time' => $parkingSpot->end_time,
-        		'status' => $parkingSpot->status,
-        		'type' => $parkingSpot->type,
-        		'details' => $parkingSpot->details,
-        		'price' => $parkingSpot->price,
+                'latitude' => $parkingSpot->latitude,
+                'longitude' => $parkingSpot->longitude,
+                'start_time' => $parkingSpot->start_time,
+                'end_time' => $parkingSpot->end_time,
+                'sunday' => $parkingSpot->sunday,
+                'monday' => $parkingSpot->monday,
+                'tuesday' => $parkingSpot->tuesday,
+                'wednesday' => $parkingSpot->wednesday,
+                'thursday' => $parkingSpot->thursday,
+                'friday' => $parkingSpot->friday,
+                'saturday' => $parkingSpot->saturday,
+                'status' => $parkingSpot->status,
+                'type' => $parkingSpot->type,
+                'details' => $parkingSpot->details,
+                'price' => $parkingSpot->price,
         	];
         }
         if(count($parkings_array) > 0)
         	return json_encode($parkings_array);
-	    return json_encode(false);
+	    $array['search_error'] = true;
+        return json_encode($array);
     }
 }
